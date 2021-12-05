@@ -7,9 +7,8 @@ import java.util.InputMismatchException;
 public class TemperatureSeriesAnalysis {
 
     private double[] temperatureSeries;
-    public TemperatureSeriesAnalysis() {
-
-    }
+    private int absoluteMinus = -273;
+    private int maxTemp = 1000;
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
         this.temperatureSeries = Arrays.copyOf(temperatureSeries,
@@ -18,12 +17,12 @@ public class TemperatureSeriesAnalysis {
 
     public double average() {
 
-        if (temperatureSeries == null || temperatureSeries.length == 0) {
+        if (temperatureSeries.length == 0) {
             throw new IllegalArgumentException("temperatureSeries is empty");
         }
 
         double sum = 0;
-        for (int i = 0; i < temperatureSeries.length; i++){
+        for (int i = 0; i < temperatureSeries.length; i++) {
             sum += temperatureSeries[i];
         }
         return sum/temperatureSeries.length;
@@ -31,34 +30,32 @@ public class TemperatureSeriesAnalysis {
 
     public double deviation() {
 
-        if (temperatureSeries == null || temperatureSeries.length == 0) {
+        if (temperatureSeries.length == 0) {
             throw new IllegalArgumentException("temperatureSeries is empty");
         }
 
         double sum = 0;
         double sqDiff = 0;
 
-        for (int i = 0; i < temperatureSeries.length; i++){
+        for (int i = 0; i < temperatureSeries.length; i++) {
             sum += temperatureSeries[i];
         }
 
         double mean = (double) sum/(double) temperatureSeries.length;
 
-        for (int i = 0; i < temperatureSeries.length; i++){
-            sqDiff += (temperatureSeries[i] - mean) *
-                    (temperatureSeries[i] - mean);
+        for (int i = 0; i < temperatureSeries.length; i++) {
+            sqDiff += (temperatureSeries[i] - mean)
+                    * (temperatureSeries[i] - mean);
         }
 
         return Math.sqrt((double) sqDiff / temperatureSeries.length);
     }
 
     public double min() {
-        int absoluteMinus = -273;
         return findTempClosestToValue(absoluteMinus);
     }
 
     public double max() {
-        int maxTemp = 1000;
         return findTempClosestToValue(maxTemp);
     }
 
@@ -68,7 +65,7 @@ public class TemperatureSeriesAnalysis {
 
     public double findTempClosestToValue(double tempValue) {
 
-        if (temperatureSeries == null || temperatureSeries.length == 0) {
+        if (temperatureSeries.length == 0) {
             throw new IllegalArgumentException("temperatureSeries is empty");
         }
 
@@ -77,11 +74,11 @@ public class TemperatureSeriesAnalysis {
 
         for (int i = 0; i < temperatureSeries.length; i++) {
             double difference = Math.abs(temperatureSeries[i] - tempValue);
-            if (difference < diff){
+            if (difference < diff) {
                 diff = difference;
                 closest = temperatureSeries[i];
             }
-            else if(difference == diff){
+            else if (difference == diff) {
                 closest = Math.max(closest, temperatureSeries[i]);
             }
         }
@@ -90,7 +87,7 @@ public class TemperatureSeriesAnalysis {
 
     public double[] findTempsLessThen(double tempValue) {
 
-        if (temperatureSeries == null || temperatureSeries.length == 0) {
+        if (temperatureSeries.length == 0) {
             throw new IllegalArgumentException("temperatureSeries is empty");
         }
 
@@ -127,18 +124,18 @@ public class TemperatureSeriesAnalysis {
 
     public double[] findTempsGreaterThen(double tempValue) {
 
-        if (temperatureSeries == null || temperatureSeries.length == 0) {
+        if (temperatureSeries.length == 0) {
             throw new IllegalArgumentException("temperatureSeries is empty");
         }
 
-        int size = helper(tempValue,0);
+        int size = helper(tempValue, 0);
         double[] greaterArray = new double[size];
 
         int i = 0, j = 0;
 
         while (i < temperatureSeries.length) {
 
-            if (temperatureSeries[i] >= tempValue){
+            if (temperatureSeries[i] >= tempValue) {
                 greaterArray[j] = temperatureSeries[i];
                 j++;
             }
@@ -151,7 +148,7 @@ public class TemperatureSeriesAnalysis {
 
     public final TempSummaryStatistics summaryStatistics() {
 
-        if (temperatureSeries == null || temperatureSeries.length == 0) {
+        if (temperatureSeries.length == 0) {
             throw new IllegalArgumentException("temperatureSeries is empty");
         }
 
@@ -167,7 +164,7 @@ public class TemperatureSeriesAnalysis {
 
     public int addTemps(double... temps) {
 
-        if (temperatureSeries == null || temperatureSeries.length == 0) {
+        if (temperatureSeries.length == 0) {
             throw new IllegalArgumentException("temperatureSeries is empty");
         }
         for (double temp : temps) {
